@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load urlify %}
 
 {% block head_title %}
 {{ instance.title }} | {{ block.super }}
@@ -10,23 +11,29 @@
         {% if instance.image %}
 		<img src="{{ instance.image.url }}" class="img-responsive" />
         {% endif %}
-	<h1>{{ instance.title }}<small> {{ instance.timestamp }}</small></h1>
+	<h1>{{ instance.title }}<small>{% if instance.draft %} <span style="color:red">Draft</span>{% endif %} {{ instance.publish }}</small></h1>
+       <!-- {% if instance.user.get_full_name %}  to get full name
+        <p>Author: {{ instance.user.get_full_name }}</p>
+       {% endif %} -->
+        <p>Author: {{ instance.user }}</p>
 
+<p><div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="button" data-action="recommend" data-size="small" data-show-faces="true" data-share="true"></div></p>
+        <hr/>
 
+<div class="row">
+    <div class="col-sm-12">
 
-		<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">Facebook</a>
+        <div class="content-markdown">{{ instance.content }}</div>
+        <div class="content-markdown">{{ instance.content }}</div>
+        <div class="content-markdown">{{ instance.content }}</div>
+        <div class="content-markdown">{{ instance.content }}</div>
+        <div class="content-markdown">{{ instance.content }}</div>
 
-        <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}">Twitter</a>
+        <hr/>
+        <br/>
 
-        <a href='https://plus.google.com/share?url=http://codingforentrepreneurs.com'> </a>
-
-            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{
-            instance.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}">Linkedin</a>
-
-       <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}">Reddit</a>
-
-	
-	{{ instance.content|linebreaks }}<br/>
-
+        <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div> <!-- FB comments -->
+</div>
     </div>
+</div>
 {% endblock %}
