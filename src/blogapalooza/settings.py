@@ -38,10 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #third party
+    'crispy_forms',
+    'markdown_deux',
     'pagedown',
+
     #local
+    'comments',
     'posts',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -131,3 +137,5 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     ]
+
+MARKDOWN_DEUX_STYLES = { "default": { "extras": { "code-friendly": None, }, "safe_mode": False, }, }
