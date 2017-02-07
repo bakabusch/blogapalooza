@@ -33,9 +33,41 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
+<div class='container'> 
+    
+<nav class="navbar navbar-blue">
+        <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mynav">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'posts:list' %}">Home</a> 
+        </div>
+             <div class="collapse navbar-collapse" id="mynav">
+                <ul class="nav navbar-nav">
+                    {% if user.is_authenticated %}
+                    <li><a>Hello, {{ user.username }}</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li><a href='{% url "register" %}'>Register</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                    
+                    <li><a href="{% url 'recipes:list' %}">Recipes</a></li>
+                    <li><a href="https://www.facebook.com/profile.php?id=100001468494842">FaceBook</a></li>
+                    <li><a href="http://mlb.mlb.com/mlb/players/?tcid=nav_mlb_players">MLB</a></li>
+                    <li><a href="http://www.fangraphs.com/projections.aspx?pos=all&stats=bat&type=steamer&team=0&lg=all&players=0">Fangraphs</a></li>
+                    <li><a href="http://www.espn.com/mlb/">ESPN Baseball</a></li>
+                    <li><a href="http://launchcode.org">LaunchCode</a></li>
 
 
-	<div class="container">
+                </ul>
+             </div>
+        </div>
+    </nav>
+
 	{% block content %}{% endblock content %}
 	</div>
 
@@ -82,6 +114,41 @@
               setContent(newContent)
             })
 
+            var ingredientInput = $("#id_ingredient")
+            
+            function setIngredient(value){
+              var markedIngredient = marked(value)
+              $("#preview-ingredient").html(markedIngredient)
+              $("#preview-ingredient img").each(function(){
+                $(this).addClass("img-responsive")
+              })
+
+            }
+
+            setIngredient(contentInput.val())
+
+            ingredientInput.keyup(function(){
+              var newIngredient = $(this).val()
+              setIngredient(newIngredient)
+            })
+
+            var introInput = $("#id_intro")
+
+            function setIntro(value){
+              var markedIntro = marked(value)
+              $("#preview-intro").html(markedIntro)
+              $("#preview-intro img").each(function(){
+                $(this).addClass("img-responsive")
+              })
+
+            }
+
+            setIntro(introInput.val())
+
+            introInput.keyup(function(){
+              var newIntro = $(this).val()
+              setIntro(newIntro)
+            })
 
             var titleInput = $("#id_title");
 

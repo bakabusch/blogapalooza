@@ -1,5 +1,13 @@
 h1 {
-	color: #CCD1D1;
+    color: #606060;
+}
+
+h2 {
+    color: #606060;
+}
+
+h3 {
+    color: #606060;
 }
 
 .wmd-panel{
@@ -9,4 +17,9 @@ h1 {
 
 .comment-reply{
 	display:none;
+}
+
+body {
+	background-image: url("swirl_pattern.png");
+	background size: 50%; 
 }
