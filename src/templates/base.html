@@ -34,7 +34,8 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <div class='container'> 
-    
+
+
 <nav class="navbar navbar-blue">
         <div class="container-fluid">
         <div class="navbar-header">
@@ -43,7 +44,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'posts:list' %}">Home</a> 
+            <a class="navbar-brand" href="{% url 'posts:home' %}">Home</a> 
         </div>
              <div class="collapse navbar-collapse" id="mynav">
                 <ul class="nav navbar-nav">
@@ -54,13 +55,9 @@
                     <li><a href='{% url "register" %}'>Register</a></li>
                     <li><a href="{% url 'login' %}">Login</a></li>
                     {% endif %}
-                    
+                    <li><a href="{% url 'posts:list' %}">Posts</a></li>
                     <li><a href="{% url 'recipes:list' %}">Recipes</a></li>
-                    <li><a href="https://www.facebook.com/profile.php?id=100001468494842">FaceBook</a></li>
-                    <li><a href="http://mlb.mlb.com/mlb/players/?tcid=nav_mlb_players">MLB</a></li>
-                    <li><a href="http://www.fangraphs.com/projections.aspx?pos=all&stats=bat&type=steamer&team=0&lg=all&players=0">Fangraphs</a></li>
-                    <li><a href="http://www.espn.com/mlb/">ESPN Baseball</a></li>
-                    <li><a href="http://launchcode.org">LaunchCode</a></li>
+                 <li><a href="http://launchcode.org">LaunchCode</a></li>
 
 
                 </ul>
@@ -68,6 +65,7 @@
         </div>
     </nav>
 
+    </ol>
 	{% block content %}{% endblock content %}
 	</div>
 

@@ -4,6 +4,7 @@
 from django.conf.urls import url
 from django.contrib import admin
 from .views import (
+	home,
 	post_list,
 	post_create,
 	post_detail,
@@ -12,7 +13,9 @@ from .views import (
 	)
 
 urlpatterns = [
-    url(r'^$', post_list, name='list'),
+    url(r'^$', home, name='home'),
+    url(r'^list/$', post_list, name='list'),
+    #url(r'^$', post_list, name='list'),
     url(r'^create/$', post_create),
     url(r'^(?P<slug>[\w-]+)/$', post_detail, name='detail'),
     url(r'^(?P<slug>[\w-]+)/edit/$', post_update, name='update'),

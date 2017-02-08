@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+    <div class="col-sm-7 col-sm-offset-3">
+	<h1>Shiga(toxin) on a Shingle</h1>
+    <h2>Tales from a Chef turned Health Inspector</h2>
+    <form method="GET" action="" class="row">
+    <div class="col-sm-6">
+    <div class="input-group">
+        <input class="form-control" type="text" name="q" placeholder="Search posts" value="{{ request.GET.q }}"/>
+        <span class="input-group-btn">
+           <!-- <input class="btn btn-default" type="submit" value="Search"/> font awesome below-->
+            <button class="btn btn-default" type="submit">Search <i class="fa fa-search"></i></button>
+        </span>
+    </div>
+    </div>
+    </form>
+</div>
+  
+<div class="row">
+{% for obj in object_list %}
+
+	<div class="col-sm-6">
+	<div class="thumbnail">
+        {% if obj.image %}
+		<img src="{{ obj.image.url }}" class="img-responsive" />
+        {% endif %}
+
+		<div class="caption home-item">
+            {% if obj.draft %}<h3>Staff Only: Draft </h3>{% endif %} {% if obj.publish > today %} <h3>Staff Only: Future Post</h3> {% endif %}
+		<h3><a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a> <small>{{ obj.publish}}</small> </h3>
+            <p>Author: {{ obj.user }}</p>
+            {{ obj.get_markdown|truncatechars_html:65 }}
+		    <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
+
+		</div>
+		
+
+	</div>
+	
+</div>
+
+<hr/>
+{% cycle "" "</div><div class='row'>" %}
+
+{% endfor %}
+</div>
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+        </span>
+
+        {% if object_list.has_next %}
+            <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+</div>
+
+{% endblock content %}

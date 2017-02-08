@@ -1,0 +1,58 @@
+<ol class='breadcrumb'>
+        <li><a href='{% url "posts:list" %}'>Home</a></li>
+        {% block post_detail_link %}{% endblock %}
+        {% block recipe_detail_link %}
+        {% endblock %}
+
+        {% if not request.user.is_authenticated %}
+        <li class='pull-right'><a href='{% url "register" %}'>Register</a></li>
+        <li class='pull-right'><a href='{% url "login" %}'>Login</a></li>
+        {% else %}
+        <li class='pull-right'><a href='{% url "logout" %}'>Logout</a></li>
+        {% endif %}
+
+
+
+    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> <input type='text' name='q' placeholder='Search players' value='{{ request.GET.q }}'/>
+                <input type='submit' value='Search' />
+
+
+
+     <div class="input-group">
+        <input class="form-control" type="text" name="q" placeholder="Search recipes" value="{{ request.GET.q }}"/>
+        <span class="input-group-btn">
+           <!-- <input class="btn btn-default" type="submit" value="Search"/> font awesome below-->
+            <button class="btn btn-default" type="submit">Search <i class="fa fa-search"></i></button>            
+
+
+
+
+
+<nav class="navbar navbar-blue">
+        <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mynav">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'posts:list' %}">Home</a> 
+        </div>
+             <div class="collapse navbar-collapse" id="mynav">
+                <ul class="nav navbar-nav">
+                    {% if user.is_authenticated %}
+                    <li><a>Hello, {{ user.username }}</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li><a href='{% url "register" %}'>Register</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                    
+                    <li><a href="{% url 'recipes:list' %}">Recipes</a></li>
+                 <li><a href="http://launchcode.org">LaunchCode</a></li>
+
+
+                </ul>
+             </div>
+        </div>
+    </nav>

@@ -13,6 +13,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.utils import timezone
 from comments.forms import CommentForm
 from comments.models import Comment
+from recipes.models import Recipe
 from .forms import PostForm
 from .models import Post
 from .utils import get_read_time
@@ -53,6 +54,41 @@ def post_list(request):
 """
 
 """
+
+def home(request):
+    today = timezone.now().date
+    queryset_list = Post.objects.active()#filter(draft=False).filter(publish__lte=timezone.now())#all()  # .order_by("-timestamp") --changed in models with class meta instead
+    #filtering stuff so that drafts and things to be published in the future don't show but now done as model manager instead
+    if request.user.is_staff or request.user.is_superuser:
+        queryset_list = Post.objects.all() #allows all posts (draft and future) to be seen
+    query = request.GET.get("q")
+    if query:
+        queryset_list = queryset_list.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query)
+        ).distinct()
+    paginator = Paginator(queryset_list, 8)  
+    page_request_var = "page"
+    page = request.GET.get(page_request_var)
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        queryset = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        queryset = paginator.page(paginator.num_pages)
+
+    context = {
+        'object_list': queryset,
+        "title": "List",
+        "page_request_var": page_request_var,
+        "today": today,
+    }
+    return render(request, "home.html", context)
+    
 
 def post_create(request):
     if not request.user.is_staff or not request.user.is_superuser:
